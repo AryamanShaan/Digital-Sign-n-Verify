@@ -5,6 +5,7 @@ class UserProfile(models.Model):
     email = models.EmailField(unique=True)  
     public_key = models.TextField()  
     encoded_private_key = models.TextField() 
+    iv = models.BinaryField() 
 
     def __str__(self):
         return self.username
