@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import base64
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_pkm4d)egg07igb8b&1n%+m8nzxg0u#f5*4l91n6#hf@)&xj)x'
+# deleted the original SECRET_KEY line
+
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+
+AES_SECRET_KEY = os.getenv("AES_SECRET_KEY") 
+if AES_SECRET_KEY:
+    DECODED_AES_KEY = base64.b64decode(AES_SECRET_KEY)
+else:
+    raise ValueError("AES_SECRET_KEY is not set in the environment!")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
