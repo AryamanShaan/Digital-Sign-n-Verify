@@ -8,7 +8,7 @@ import base64
 from user.models import UserProfile
 from dotenv import load_dotenv
 from .forms import CustomUserCreationForm
-from ..cryptographic_functions import generate_rsa_key_pair, encrypt_private_key
+from cryptographic_functions import generate_rsa_key_pair, encrypt_private_key
 
 load_dotenv()
 
@@ -32,9 +32,9 @@ def register_view(request):
             encrypted_private_key_base64 = base64.b64encode(encrypted_private_key).decode('utf-8')
             iv_base64 = base64.b64encode(iv).decode('utf-8')
             public_key_base64 = base64.b64encode(public_key_pem).decode('utf-8')
-            print('iv :', iv_base64)
-            print('public_key :', public_key_base64)
-            print('encrypted_private_key :', encrypted_private_key_base64)
+            # print('iv :', iv_base64)
+            # print('public_key :', public_key_base64)
+            # print('encrypted_private_key :', encrypted_private_key_base64)
             user_profile = UserProfile(
                 user=new_user,
                 # email=new_user.email,

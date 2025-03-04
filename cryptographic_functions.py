@@ -45,44 +45,43 @@ def generate_rsa_key_pair():
 
 
 
-def encrypt_with_private_key(data, private_key_pem):
-    """Encrypts data with an RSA private key."""
+def sign_data(data, private_key_pem):
+    """Signs data with an RSA private key."""
 
     private_key = serialization.load_pem_private_key(
         private_key_pem, password=None, backend=default_backend()
     )
 
-    encrypted_data = private_key.encrypt(
+    signature = private_key.sign(
         data,
-        assymetric_padding.OAEP(
-            mgf=assymetric_padding.MGF1(algorithm=hashes.SHA256()),
-            algorithm=hashes.SHA256(),
-            label=None,
+        assymetric_padding.PSS(
+            mgf=assymetric_padding.MGF1(hashes.SHA256()),
+            salt_length=assymetric_padding.PSS.MAX_LENGTH
         ),
+        hashes.SHA256()
     )
-    return encrypted_data
+    return signature
 
-
-
-def decrypt_with_public_key(encrypted_data, public_key_pem):
-    """Decrypts data with an RSA public key."""
+def verify_signature(data, signature, public_key_pem):
+    """Verifies a signature with an RSA public key."""
 
     public_key = serialization.load_pem_public_key(
         public_key_pem, backend=default_backend()
     )
 
     try:
-        decrypted_data = public_key.decrypt(
-            encrypted_data,
-            assymetric_padding.OAEP(
-                mgf=assymetric_padding.MGF1(algorithm=hashes.SHA256()),
-                algorithm=hashes.SHA256(),
-                label=None,
+        public_key.verify(
+            signature,
+            data,
+            assymetric_padding.PSS(
+                mgf=assymetric_padding.MGF1(hashes.SHA256()),
+                salt_length=assymetric_padding.PSS.MAX_LENGTH
             ),
+            hashes.SHA256()
         )
-        return decrypted_data
-    except ValueError:
-        return None # Decryption failed.
+        return True # Verification successful
+    except Exception:
+        return False # Verification failed
 
 
 def encrypt_private_key(aes_key, private_key_pem):

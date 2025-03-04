@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature Error</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h2 {
+            color: #d9534f; /* Red color for error */
+        }
+        .error-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8d7da;
+            border: 1px solid #dc3545;
+            color: #721c24;
+            display: inline-block;
+            font-size: 20px;
+            font-weight: bold;
+            word-wrap: break-word;
+            user-select: all; /* Makes copying easy */
+        }
+        .home-button {
+            margin-top: 30px;
+            padding: 12px 24px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .home-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>An Error Occurred While Processing Your Document</h2>
+    <p>Please check your file and try again. If the issue persists, contact support.</p>
+
+    <div class="error-box">
+        {{ error_message }}
+    </div>
+
+    <p>(Click or highlight to copy)</p>
+
+    <!-- Home Button -->
+    <button class="home-button" onclick="window.location.href='/'">Home</button>
+
+    <script>
+        function copyError() {
+            const errorBox = document.querySelector('.error-box');
+            const range = document.createRange();
+            range.selectNode(errorBox);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            alert("Error message copied to clipboard!");
+        }
+        document.querySelector('.error-box').addEventListener('click', copyError);
+    </script>
+</body>
+</html>

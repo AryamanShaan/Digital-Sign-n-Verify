@@ -1,7 +1,5 @@
-from django import forms
-from .models import PDFUpload
 
-class PDFUploadForm(forms.ModelForm):
-    class Meta:
-        model = PDFUpload
-        fields = ['pdf_file']
+from django import forms
+
+class PDFUploadForm(forms.Form):
+    pdf_file = forms.FileField()  # This will handle the PDF file upload

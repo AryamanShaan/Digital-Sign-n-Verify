@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Signature</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h2 {
+            color: #333;
+        }
+        .signature-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            display: inline-block;
+            font-size: 20px;
+            font-weight: bold;
+            word-wrap: break-word;
+            user-select: all; /* Makes copying easy */
+        }
+        .home-button {
+            margin-top: 30px;
+            padding: 12px 24px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .home-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Here is the Digital Signature of Your Document!</h2>
+    <p>Copy and store it safely! Share this Signature along with your Username on this WebApp along with the PDF doc for verification in the future!</p>
+
+    <div class="signature-box" onclick="copySignature()">
+        {{ encrypted_sign }}
+    </div>
+
+    <p>(Click or highlight to copy)</p>
+
+    <!-- Home Button -->
+    <button class="home-button" onclick="window.location.href='/'">Home</button>
+
+    <script>
+        function copySignature() {
+            const signatureBox = document.querySelector('.signature-box');
+            const range = document.createRange();
+            range.selectNode(signatureBox);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            alert("Signature copied to clipboard!");
+        }
+    </script>
+</body>
+</html>

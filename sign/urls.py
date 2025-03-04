@@ -2,5 +2,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='sign'),  # this is the landing page
+    path('', views.upload_pdf, name='sign'),  # this is the landing page
 ]
