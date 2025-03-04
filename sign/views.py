@@ -45,18 +45,19 @@ def upload_pdf(request):
             if not encoded_private_key or not iv:
                 raise ValueError("Missing encrypted private key or IV")
 
-            encrypted_private_key = base64.b64decode(encoded_private_key.encode('utf-8'))
-            iv = base64.b64decode(iv.encode('utf-8'))
+            encrypted_private_key = base64.b64decode(encoded_private_key)
+            iv = base64.b64decode(iv)
             
             decrypted_private_key = decrypt_private_key(DECODED_AES_KEY, encrypted_private_key, iv)
             if not decrypted_private_key:
                 raise ValueError("Decryption of private key failed")
 
             encrypted_sign = sign_data(sha256_hash_pdf, decrypted_private_key)
+            encrypted_sign_base64 = base64.b64encode(encrypted_sign).decode('utf-8')
             if not encrypted_sign:
                 raise ValueError("Encryption of PDF hash failed")
 
-            return render(request, 'sign/display_sign.html', {'encrypted_sign': encrypted_sign})
+            return render(request, 'sign/display_sign.html', {'encrypted_sign': encrypted_sign_base64})
 
         except Exception as e:
             # Catch any exception and render sign_error.html with the error message

@@ -22,4 +22,5 @@ urlpatterns = [
     path('user/', include('user.urls')),
     path('', include('home.urls')),  
     path('sign/', include('sign.urls')),
+    path('verify/', include('verify.urls')),
 ]

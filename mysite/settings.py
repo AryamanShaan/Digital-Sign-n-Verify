@@ -34,8 +34,8 @@ if AES_SECRET_KEY:
 else:
     raise ValueError("AES_SECRET_KEY is not set in the environment!")
 
-
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/user/register/'  # Redirect to the register page if not logged in
+LOGIN_REDIRECT_URL = '/user/login/'
 LOGOUT_REDIRECT_URL = '/user/login/'  # Optional: Redirect to login after logout
 
 
@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'user',
     'sign',
     'home',
+    'verify',
 ]
 
 MIDDLEWARE = [
