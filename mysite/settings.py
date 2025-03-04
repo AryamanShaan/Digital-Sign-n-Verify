@@ -34,6 +34,11 @@ if AES_SECRET_KEY:
 else:
     raise ValueError("AES_SECRET_KEY is not set in the environment!")
 
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/user/login/'  # Optional: Redirect to login after logout
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -50,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
+    'sign',
 ]
 
 MIDDLEWARE = [
