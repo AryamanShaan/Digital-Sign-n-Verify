@@ -1,4 +1,4 @@
-# Digital-Sign-n-Verify
+# DigitalSign
 
 
 Building
